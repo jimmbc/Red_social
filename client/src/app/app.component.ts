@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UserService } from './services/user.service';
 import { GLOBAL } from './services/global';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -19,7 +20,7 @@ export class AppComponent implements OnInit, DoCheck{
     private _router: Router,
   	private _userService:UserService
   ){
-  	this.title = 'NGSOCIAL';
+  	this.title = 'SERVIX';
     this.url = GLOBAL.url;
   }
 

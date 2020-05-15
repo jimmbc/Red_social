@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { routing, appRoutingProviders } from './app.routing';
 import { MomentModule } from 'angular2-moment';
+import { RouterModule } from '@angular/router';
 
 // Modulo custom
 import { MessagesModule } from './messages/messages.module';
@@ -47,7 +48,11 @@ import { UserGuard } from './services/user.guard';
     routing,
     HttpClientModule,
     MomentModule,
-    MessagesModule
+    MessagesModule,
+    RouterModule
+  ],
+  exports:[
+    RouterModule
   ],
   providers: [
     appRoutingProviders,

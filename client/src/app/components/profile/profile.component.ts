@@ -49,7 +49,7 @@ export class ProfileComponent implements OnInit{
 			this.getCounters(id);
 		});
 	}
-///////
+
 	getUser(id){
 		this._userService.getUser(id).subscribe(
 			response => {
@@ -72,7 +72,7 @@ export class ProfileComponent implements OnInit{
 				}else{
 					this.status = 'error';
 				}
-			},
+			},	
 			error => {
 				console.log(<any>error);
 				this._router.navigate(['/perfil',this.identity._id]);

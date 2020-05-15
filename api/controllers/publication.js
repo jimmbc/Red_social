@@ -181,41 +181,6 @@ function getImageFile(req, res){
 	});
 }
 
-function updatePublication(req, res){
-	var publicationId = req.params.id;
-	var update = req.body;
-
-	// borrar propiedad password
-	delete update.password;
-
-	if(publicationId != req.user.sub){
-		return res.status(500).send({message: 'No tienes permiso para actualizar los datos del usuario'});
-	}
-
-	User.find({ $or: [
-				 {publication: update.publication.toLowerCase()}
-		 ]}).exec((err, publications) => {
-		 
-		 	var publication_isset = false;
-		 	publications.forEach((publication) => {
-		 		if(publication && publication._id != publicationId) publication_isset = true;
-		 	});
-
-		 	if(publication_isset) return res.status(404).send({message: 'Los datos ya están en uso'});
-		 	
-		 	User.findByIdAndUpdate(publicationId, update, {new:true}, (err, userUpdated) => {
-				if(err) return res.status(500).send({message: 'Error en la petición'});
-
-				if(!userUpdated) return res.status(404).send({message: 'No se ha podido actualizar el usuario'});
-
-				return res.status(200).send({publication: publicationUpdated});
-			});
-
-		 });
-
-}
-
-
 module.exports = {
 	probando,
 	savePublication,

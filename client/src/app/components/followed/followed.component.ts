@@ -7,11 +7,11 @@ import { FollowService } from '../../services/follow.service';
 import { GLOBAL } from '../../services/global';
 
 @Component({
-	selector: 'users',
-	templateUrl: './users.component.html',
+	selector: 'followed',
+	templateUrl: './followed.component.html',
 	providers: [UserService, FollowService]
 })
-export class UsersComponent implements OnInit{
+export class FollowedComponent implements OnInit{
 	public title: string;
 	public url: string;
 	public identity;
@@ -23,7 +23,9 @@ export class UsersComponent implements OnInit{
 	public pages;
 	public users: User[];
 	public follows;
+	public followed;
 	public status: string;
+	public userPageId;
 
 	constructor(
 		private _route: ActivatedRoute,
@@ -31,7 +33,7 @@ export class UsersComponent implements OnInit{
 		private _userService: UserService,
 		private _followService: FollowService
 	){
-		this.title = 'Gente';
+		this.title = 'Seguidores de';
 		this.url = GLOBAL.url;
 		this.identity = this._userService.getIdentity();
 		this.token = this._userService.getToken();
@@ -44,6 +46,9 @@ export class UsersComponent implements OnInit{
 
 	actualPage(){
 		this._route.params.subscribe(params => {
+			let user_id = params['id'];
+			this.userPageId = user_id;
+
 			let page = +params['page'];
 			this.page = page;
 
@@ -63,24 +68,49 @@ export class UsersComponent implements OnInit{
 			}
 
 			// devolver listado de usuarios
-			this.getUsers(page);
+			this.getUser(user_id, page);
 		});
 	}
 
-	getUsers(page){
-		this._userService.getUsers(page).subscribe(
+	getFollows(user_id, page){
+		this._followService.getFollowed(this.token, user_id, page).subscribe(
 			response => {
-				if(!response.users){
+				if(!response.follows){
 					this.status = 'error';
 				}else{
+					console.log(response);
+					
 					this.total = response.total;
-					this.users = response.users;
+					this.followed = response.follows;
 					this.pages = response.pages;
 					this.follows = response.users_following;
 
 					if(page > this.pages){
 						this._router.navigate(['/gente',1]);
 					}
+					
+				}
+			},
+			error => {
+				var errorMessage = <any>error;
+				console.log(errorMessage);
+
+				if(errorMessage != null){
+					this.status = 'error';
+				}
+			}
+		);
+	}
+
+	public user: User;
+	getUser(user_id, page){
+		this._userService.getUser(user_id).subscribe(
+			response => {
+				if(response.user){
+					this.user = response.user;
+					this.getFollows(user_id,page);
+				}else{
+					this._router.navigate(['/home']);
 				}
 			},
 			error => {

@@ -25,13 +25,62 @@
 				Los apellidos son obligatorios!!
 			</span>
 		</p>
-
 		<p>
 			<label>Apodo</label>
 			<input type="text" name="nick" #nick="ngModel" [(ngModel)]="user.nick" class="form-control" required />
 			<span *ngIf="!nick.valid && nick.touched">
 				El apodo es obligatorio!!
 			</span>
+		</p>
+		<p>
+			<label>CI</label>
+			<input type="text" name="ci" #ci="ngModel" [(ngModel)]="user.ci" class="form-control" required />
+			<span *ngIf="!ci.valid && ci.touched">
+				El apodo es obligatorio!!
+			</span>
+		</p>
+
+		<p>
+			<label>¿Dónde fue Expedido su carnet ?</label>
+			<select class="form-control" type="text" name="exp" #exp="ngModel" [(ngModel)]="user.exp" class="form-control" 
+			required >
+				<option>La Paz</option>
+			    <option>Cochabamba</option>
+			    <option>Santa Cruz</option>
+			    <option>Beni</option>
+			    <option>Pando</option>
+			    <option>Potosi</option>
+			    <option>Tarija</option>
+			    <option>Oruro</option>
+			    <option>Chuquisaca</option>
+
+			<span *ngIf="!exp.valid && exp.touched">
+				Donde fue expedido es obligatorio!!
+			</span>
+			</select> 
+		</p>
+
+
+		<p>
+
+			<label>Dirección</label>
+			<input type="text" name="adress" #adress="ngModel" [(ngModel)]="user.adress" class="form-control" required />
+			<span *ngIf="!adress.valid && adress.touched">
+				Los apellidos son obligatorios!!
+			</span>
+		</p>
+
+		<p>
+			<label>Rol</label>
+			<select class="form-control" type="text" name="role" #role="ngModel" [(ngModel)]="user.role" class="form-control" 
+			required >
+				<option>Trabajador</option>
+			    <option>Cliente</option>
+
+			<span *ngIf="!role.valid && role.touched">
+				Donde fue expedido es obligatorio!!
+			</span>
+			</select> 
 		</p>
 
 		<p>
